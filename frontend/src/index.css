@@ -1,0 +1,45 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+@import "tailwindcss";
+
+:root {
+	--color-pink: #B4A1D1;
+	--color-navy: #0C1A2B;
+	--color-white: #FFFFFF;
+	--color-york: #FDC959;
+	--color-blue: #0A14FC;
+	--color-lime: #B6FF3B;
+	--color-muted: #526176;
+	--color-lilac: #F1ECF7;
+	--color-border: #D7D0E2;
+	font-family: 'Inter', sans-serif;
+	color: var(--color-navy);
+	background: #f8f7fb;
+}
+
+@theme inline {
+	--color-pink: var(--color-pink);
+	--color-navy: var(--color-navy);
+	--color-white: var(--color-white);
+	--color-york: var(--color-york);
+	--color-blue: var(--color-blue);
+	--color-lime: var(--color-lime);
+	--color-muted: var(--color-muted);
+	--color-lilac: var(--color-lilac);
+	--color-border: var(--color-border);
+}
+
+* {
+	box-sizing: border-box;
+	font-family: inherit;
+}
+
+body {
+	min-width: 320px;
+	margin: 0;
+	background: #f8f7fb;
+}
+
+button,
+input {
+	font: inherit;
+}
