@@ -44,6 +44,66 @@ export const HomeSubjects = [
     { name: 'Python', icon: 'PY', progress: 28, lessonsCompleted: 5, lessonCount: 18, color: 'bg-york' },
 ]
 
+export const SubjectCatalogFilters = ['All', 'HTML', 'CSS', 'JavaScript', 'React', 'Python']
+
+export const SubjectCatalog = [
+    {
+        name: 'HTML',
+        icon: '</>',
+        description: 'Build a strong foundation in semantic HTML and accessible page structure.',
+        completedLessons: 12,
+        totalLessons: 16,
+        progress: 75,
+        color: 'bg-york',
+        category: 'HTML',
+        status: 'IN PROGRESS',
+    },
+    {
+        name: 'CSS',
+        icon: 'CSS',
+        description: 'Create responsive layouts with modern CSS, Flexbox, and Grid.',
+        completedLessons: 9,
+        totalLessons: 14,
+        progress: 64,
+        color: 'bg-pink',
+        category: 'CSS',
+        status: 'IN PROGRESS',
+    },
+    {
+        name: 'JavaScript',
+        icon: 'JS',
+        description: 'Learn the language of the web, from fundamentals to async code.',
+        completedLessons: 18,
+        totalLessons: 24,
+        progress: 75,
+        color: 'bg-lime',
+        category: 'JavaScript',
+        status: 'CONTINUE LEARNING',
+    },
+    {
+        name: 'React',
+        icon: '⚛',
+        description: 'Build interactive interfaces with components, hooks, and state.',
+        completedLessons: 7,
+        totalLessons: 20,
+        progress: 35,
+        color: 'bg-pink',
+        category: 'React',
+        status: 'IN PROGRESS',
+    },
+    {
+        name: 'Python',
+        icon: 'PY',
+        description: 'Explore Python basics, problem solving, and useful automation.',
+        completedLessons: 5,
+        totalLessons: 18,
+        progress: 28,
+        color: 'bg-york',
+        category: 'Python',
+        status: 'IN PROGRESS',
+    },
+]
+
 export const HomePaths = [
     { title: 'Front-end foundations', detail: 'HTML, CSS and JavaScript · 32 lessons', mobileDetail: '32 lessons · Beginner', badge: 'BEGINNER · 6 WEEKS', icon: '▤', color: 'bg-lime' },
     { title: 'Build with React', detail: 'Components, hooks and APIs · 24 lessons', mobileDetail: '24 lessons · Popular', badge: 'POPULAR · 5 WEEKS', icon: '⚛', color: 'bg-pink' },
