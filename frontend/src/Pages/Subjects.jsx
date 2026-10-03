@@ -1,31 +1,6 @@
 import { useMemo, useState } from 'react'
 import { SubjectCatalog, SubjectCatalogFilters } from '../const/index.js'
-
-function SubjectCard({ subject }) {
-    return (
-        <article className="rounded-[16px] border border-border/70 bg-white p-4 shadow-[0_5px_18px_rgba(12,26,43,0.06)] sm:p-5 md:rounded-[18px] md:p-6">
-            <div className="flex items-start gap-3.5">
-                <span className={`grid h-11 w-11 shrink-0 place-items-center rounded-[11px] text-[12px] font-extrabold text-navy sm:h-12 sm:w-12 ${subject.color}`} aria-hidden="true">{subject.icon}</span>
-                <div className="min-w-0 flex-1">
-                    <div className="flex items-start justify-between gap-2">
-                        <h2 className="truncate text-[15px] font-extrabold tracking-tight md:text-[17px]">{subject.name}</h2>
-                        <span className="shrink-0 rounded-full bg-lilac px-2 py-1 text-[7px] font-extrabold tracking-wide text-muted md:text-[8px]">{subject.status}</span>
-                    </div>
-                    <p className="mt-1.5 text-[10px] leading-[1.55] text-muted md:mt-2 md:text-[11px]">{subject.description}</p>
-                </div>
-            </div>
-
-            <div className="mt-4 flex items-center justify-between text-[9px] md:mt-5 md:text-[10px]">
-                <span className="font-semibold text-muted">{subject.completedLessons} of {subject.totalLessons} lessons</span>
-                <span className="font-extrabold text-blue">{subject.progress}%</span>
-            </div>
-            <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-lilac md:mt-2.5 md:h-2">
-                <div className={`h-full rounded-full ${subject.color}`} style={{ width: `${subject.progress}%` }} />
-            </div>
-        </article>
-    )
-}
-
+import MainSubjectCard from '../components/cards/SubjectCard.jsx'
 export default function Subjects() {
     const [activeFilter, setActiveFilter] = useState('All')
     const [search, setSearch] = useState('')
@@ -90,7 +65,7 @@ export default function Subjects() {
 
                 {filteredSubjects.length > 0 ? (
                     <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-2 md:grid-cols-3 md:gap-4">
-                        {filteredSubjects.map((subject) => <SubjectCard key={subject.name} subject={subject} />)}
+                        {filteredSubjects.map((subject) => <MainSubjectCard key={subject.name} subject={subject} />)}
                     </div>
                 ) : (
                     <div className="rounded-[16px] border border-border bg-white px-5 py-12 text-center">

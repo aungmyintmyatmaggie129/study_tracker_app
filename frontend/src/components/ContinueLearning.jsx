@@ -15,15 +15,17 @@ export default function ContinueLearning() {
                     </div>
                     <span className="shrink-0 rounded-full bg-lilac px-2.5 py-1.5 text-[8px] font-extrabold uppercase">Lesson {currentLesson.lessonNumber} of {currentLesson.lessonCount}</span>
                 </div>
-                <NavLink to="/subjects" className="mt-4 flex items-center gap-3">
+                <div className="mt-4 flex items-center gap-3">
                     <span className="grid h-11 w-11 shrink-0 place-items-center rounded-[9px] bg-lime text-[13px] font-extrabold">JS</span>
                     <span className="min-w-0 flex-1">
                         <span className="block truncate text-[12px] font-bold">{currentLesson.title}</span>
                         <span className="mt-1 block text-[10px] text-muted">{currentLesson.duration} · {currentLesson.practiceCount} practice exercises</span>
                     </span>
-                    <span className="hidden h-10 items-center gap-2 rounded-[9px] bg-navy px-4 text-[10px] font-bold text-white md:flex">RESUME <span className="text-lime">→</span></span>
-                    <span className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-navy text-[13px] text-white md:hidden">→</span>
-                </NavLink>
+                    <NavLink to="/focus">
+                        <span className="hidden h-10 items-center gap-2 rounded-[9px] bg-navy px-4 text-[10px] font-bold text-white md:flex">RESUME <span className="text-lime">→</span></span>
+                        <span className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-navy text-[13px] text-white md:hidden">→</span>
+                    </NavLink>
+                </div>
                 <div className="mt-3 h-1.5 overflow-hidden rounded-full bg-lilac">
                     <div className="h-full rounded-full bg-lime" style={{ width: `${currentLesson.progress}%` }} />
                 </div>

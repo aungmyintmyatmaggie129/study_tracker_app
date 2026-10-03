@@ -4,6 +4,7 @@ import NavBar from './components/NavBar.jsx'
 import Dashboard from './Pages/Dashboard.jsx'
 import Subjects from './Pages/Subjects.jsx'
 import Progress from './Pages/Progress.jsx'
+import FocusTimer from './Pages/FocusTimer.jsx'
 
 export default function App() {
   return (
@@ -15,6 +16,7 @@ export default function App() {
         <Route path="/" element={<Home />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/subjects" element={<Subjects />} />
+        <Route path="/focus" element={<FocusTimer />} />
         <Route path="/progress" element={<Progress />} />
       </Routes>
     </div>
