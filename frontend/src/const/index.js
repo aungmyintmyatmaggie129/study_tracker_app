@@ -143,3 +143,9 @@ export const StudyPlanSessions = [
     { subject: 'Modern history', topic: 'Cold War essay notes', duration: '30 min', icon: '▣', color: 'bg-pink' },
     { subject: 'Spanish', topic: 'Vocabulary review', duration: '25 min', icon: '○', color: 'bg-york' },
 ]
+
+export const sessions = [
+    { title: 'JavaScript fundamentals', subject: 'JavaScript', detail: 'Arrays and functions', time: '25 min', color: 'bg-lime' },
+    { title: 'Linear algebra', subject: 'Mathematics', detail: 'Vectors and matrices', time: '50 min', color: 'bg-york' },
+    { title: 'Read chapter 4', subject: 'Biology', detail: 'Cellular respiration', time: '25 min', color: 'bg-pink' },
+]

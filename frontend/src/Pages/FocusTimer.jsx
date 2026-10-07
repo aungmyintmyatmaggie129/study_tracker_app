@@ -1,12 +1,6 @@
 import { useEffect, useState } from 'react'
-
+import {sessions} from '../const'
 const durations = [25, 50, 90]
-
-const sessions = [
-    { title: 'JavaScript fundamentals', subject: 'JavaScript', detail: 'Arrays and functions', time: '25 min', color: 'bg-lime' },
-    { title: 'Linear algebra', subject: 'Mathematics', detail: 'Vectors and matrices', time: '50 min', color: 'bg-york' },
-    { title: 'Read chapter 4', subject: 'Biology', detail: 'Cellular respiration', time: '25 min', color: 'bg-pink' },
-]
 
 function formatTime(seconds) {
     const minutes = Math.floor(seconds / 60).toString().padStart(2, '0')
@@ -103,7 +97,7 @@ export default function FocusTimer() {
                                     className="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-lime px-6 py-3 text-sm font-extrabold text-navy transition hover:bg-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-lime"
                                 >
                                     <span aria-hidden="true">{isRunning ? 'Ⅱ' : '▶'}</span>
-                                    {isRunning ? 'Pause session' : 'Start focus'}
+                                    {isRunning ? 'Pause focus' : 'Start focus'}
                                 </button>
                                 <button
                                     type="button"
@@ -149,6 +143,20 @@ export default function FocusTimer() {
                 </div>
 
                 <aside className="space-y-5">
+                    <section className="rounded-[18px] border-2 border-lime bg-navy p-5 text-white sm:p-6" aria-labelledby="daily-focus-title">
+                        <div className="flex items-start justify-between gap-3">
+                            <div>
+                                <p className="text-[10px] font-extrabold uppercase tracking-[0.15em] text-lime">Daily goal</p>
+                                <h2 id="daily-focus-title" className="mt-1 text-lg font-extrabold">Focus time</h2>
+                            </div>
+                            <span className="text-sm font-bold text-white/70">1h 15m / 2h</span>
+                        </div>
+                        <div className="mt-4 h-2 overflow-hidden rounded-full bg-white/20" role="progressbar" aria-label="Daily focus goal" aria-valuemin={0} aria-valuemax={120} aria-valuenow={75}>
+                            <div className="h-full w-[62.5%] rounded-full bg-lime" />
+                        </div>
+                        <p className="mt-3 text-xs leading-relaxed text-white/65">You’re making steady progress. Keep going!</p>
+                    </section>
+
                     <section className="rounded-[18px] border border-border bg-white p-5 sm:p-6" aria-labelledby="setup-title">
                         <div className="flex items-center justify-between gap-3">
                             <div>
@@ -176,20 +184,6 @@ export default function FocusTimer() {
                             <p className="mt-1 text-sm font-extrabold">{selectedSubject}</p>
                             <p className="mt-1 text-xs leading-relaxed text-muted">Keep your attention on one task until the timer ends.</p>
                         </div>
-                    </section>
-
-                    <section className="rounded-[18px] border-2 border-lime bg-navy p-5 text-white sm:p-6" aria-labelledby="daily-focus-title">
-                        <div className="flex items-start justify-between gap-3">
-                            <div>
-                                <p className="text-[10px] font-extrabold uppercase tracking-[0.15em] text-lime">Daily goal</p>
-                                <h2 id="daily-focus-title" className="mt-1 text-lg font-extrabold">Focus time</h2>
-                            </div>
-                            <span className="text-sm font-bold text-white/70">1h 15m / 2h</span>
-                        </div>
-                        <div className="mt-4 h-2 overflow-hidden rounded-full bg-white/20" role="progressbar" aria-label="Daily focus goal" aria-valuemin={0} aria-valuemax={120} aria-valuenow={75}>
-                            <div className="h-full w-[62.5%] rounded-full bg-lime" />
-                        </div>
-                        <p className="mt-3 text-xs leading-relaxed text-white/65">You’re making steady progress. Keep going!</p>
                     </section>
                 </aside>
             </div>

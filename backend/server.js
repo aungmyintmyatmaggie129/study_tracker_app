@@ -1,6 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const subjectRouter  = require('./routes/subjectRoutes');
+const userRouter = require('./routes/userRoutes');
 require('dotenv').config();
 const app = express();
 
@@ -20,6 +21,7 @@ mongoose.connect(MONGO_DB_URI).then(() => {
 })
 
 app.use('/api/subjects', subjectRouter);
+app.use('/api/users', userRouter)
 
 app.get('/', (req, res) => {
     res.status(200).json({ message: "Home" });

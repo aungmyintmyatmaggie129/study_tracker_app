@@ -1,19 +1,39 @@
 const mongoose = require('mongoose');
 
 const userSchema = new mongoose.Schema({
-    userName: {
+    name: {
         type: String,
         required: true,
     },
-    email:{
+    email: {
         type: String,
         required: true,
         unique: true,
     },
-    password:{
+    password: {
         type: String,
         required: true,
     }
-}, {timestamps: true});
+}, { timestamps: true });
 
-export const User = mongoose.model("User", userSchema);
+userSchema.statics.register =  async function(name, email, password) {
+    // return "register process running from schema"
+    console.log(name,email,password);
+    // let userEmail = await this.findOne({value: email});
+    let userEmail = await this.findOne({ email: email });
+    console.log(userEmail);
+    if(userEmail){
+        throw new Error("Your Email is already existed! Please try to login");
+    }
+    //Hashing PlainText Password
+    const saltRounds = 10;
+    const salt = bcrypt.genSaltSync(saltRounds);
+    const hashValue = bcrypt.hashSync(password, salt);
+
+    //create
+    const user = await this.create({ name: name, email: email, password: hashValue });
+    return user;
+}
+
+const User = mongoose.model("User", userSchema);
+module.exports = User;
