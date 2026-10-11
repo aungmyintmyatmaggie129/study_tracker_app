@@ -6,20 +6,22 @@ import Subjects from './Pages/Subjects.jsx'
 import Progress from './Pages/Progress.jsx'
 import FocusTimer from './Pages/FocusTimer.jsx'
 import Login from './Pages/Login.jsx'
+import Register from './Pages/Register.jsx'
 
 export default function App() {
   const { pathname } = useLocation()
-  const isLoginPage = pathname === '/'
+  const isAuthPage = pathname === '/' || pathname === '/register'
 
   return (
     <div className="min-h-screen bg-lilac text-navy">
-      {!isLoginPage && (
+      {!isAuthPage && (
         <header className="rounded-b-[22px] bg-white px-5 py-6 sm:px-8 lg:px-12">
           <NavBar />
         </header>
       )}
       <Routes>
         <Route path="/" element={<Login />} />
+        <Route path="/register" element={<Register />} />
         <Route path="/home" element={<Home />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/subjects" element={<Subjects />} />

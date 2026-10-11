@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const bcrypt = require('bcrypt');
 
 const userSchema = new mongoose.Schema({
     name: {
@@ -18,10 +19,8 @@ const userSchema = new mongoose.Schema({
 
 userSchema.statics.register =  async function(name, email, password) {
     // return "register process running from schema"
-    console.log(name,email,password);
     // let userEmail = await this.findOne({value: email});
     let userEmail = await this.findOne({ email: email });
-    console.log(userEmail);
     if(userEmail){
         throw new Error("Your Email is already existed! Please try to login");
     }

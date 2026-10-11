@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { Link } from 'react-router-dom'
 import loginHero from '../assets/images/login_hero.png'
 import brandHexagon from '../assets/images/login-ui/hexagon-mobile.svg'
 import heroHexagon from '../assets/images/login-ui/hexagon-desktop.svg'
@@ -97,7 +98,7 @@ export default function Login() {
 
                 <div className="login-footer">
                     <span>Don't have an account?</span>
-                    <button className="login-action-link" type="button" onClick={() => setNotice('Account creation is not available yet.')}>Sign up<span className="login-signup-desktop"> for free</span></button>
+                    <Link className="login-action-link" to="/register">Sign up<span className="login-signup-desktop"> for free</span></Link>
                 </div>
             </section>
         </main>

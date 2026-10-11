@@ -10,10 +10,12 @@ const userController = {
     register: async (req, res) => {
         try {
             const { name, email, password } = req.body;
-            let user = await User.register( name, email, password )
-            res.status(200).json(user);
+            const user = await User.register(name, email, password);
+            const responseUser = user.toObject();
+            delete responseUser.password;
+            res.status(201).json(responseUser);
         } catch (error) {
-            res.status(400).json({ message: error });
+            res.status(400).json({ message: error.message });
         }
     }
 }
