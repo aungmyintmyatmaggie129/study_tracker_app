@@ -10,7 +10,7 @@ function HomeContent() {
             <HomeHero />
             <SubjectSection />
             <ContinueLearning />
-            <RecommendedPaths />
+            {/* <RecommendedPaths /> */}
         </main>
     )
 }

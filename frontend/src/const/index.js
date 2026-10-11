@@ -149,3 +149,12 @@ export const sessions = [
     { title: 'Linear algebra', subject: 'Mathematics', detail: 'Vectors and matrices', time: '50 min', color: 'bg-york' },
     { title: 'Read chapter 4', subject: 'Biology', detail: 'Cellular respiration', time: '25 min', color: 'bg-pink' },
 ]
+
+export const durations = [25, 50, 90]
+
+export const initialLessons = [
+    { id: 'event-loop', title: 'Event loop and task queue', detail: '8 min · Concept lesson', completed: true },
+    { id: 'callbacks', title: 'Callbacks and error handling', detail: '10 min · 1 practice', completed: true },
+    { id: 'async', title: 'Async JavaScript and promises', detail: '12 min · 2 exercises', completed: false },
+    { id: 'fetch', title: 'Fetch API and async/await', detail: '14 min · 2 exercises', completed: false },
+]

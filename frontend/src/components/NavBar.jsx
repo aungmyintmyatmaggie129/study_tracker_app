@@ -8,7 +8,7 @@ export default function NavBar() {
                 <span className="grid h-9 w-9 place-items-center rounded-[10px] bg-navy text-sm font-extrabold text-lime">S</span>
                 <span className="text-[15px] font-extrabold tracking-tight">STUDY MODE</span>
             </NavLink>
-            <div className="order-3 flex w-full items-center justify-center gap-7 sm:order-2 sm:w-auto sm:gap-9">
+            <div className="order-3 flex w-full items-center justify-center gap-4 sm:order-2 sm:w-auto sm:gap-9">
                 {NavLinks.map(([label, path]) => (
                     <NavLink
                         key={label}

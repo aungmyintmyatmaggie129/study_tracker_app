@@ -1,6 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const subjectRouter  = require('./routes/subjectRoutes');
+const subjectRouter = require('./routes/subjectRoutes');
 const userRouter = require('./routes/userRoutes');
 require('dotenv').config();
 const app = express();
@@ -26,3 +26,4 @@ app.use('/api/users', userRouter)
 app.get('/', (req, res) => {
     res.status(200).json({ message: "Home" });
 })
+
