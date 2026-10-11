@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react'
-import {sessions} from '../const'
-const durations = [25, 50, 90]
+import { durations, initialLessons } from '../const/index.js'
 
 function formatTime(seconds) {
     const minutes = Math.floor(seconds / 60).toString().padStart(2, '0')
@@ -13,6 +12,9 @@ export default function FocusTimer() {
     const [timeLeft, setTimeLeft] = useState(25 * 60)
     const [isRunning, setIsRunning] = useState(false)
     const [selectedSubject, setSelectedSubject] = useState('JavaScript')
+    const [lessons, setLessons] = useState(initialLessons)
+    const [isLessonFormOpen, setIsLessonFormOpen] = useState(false)
+    const [lessonTitle, setLessonTitle] = useState('')
 
     useEffect(() => {
         if (!isRunning || timeLeft === 0) return undefined
@@ -31,6 +33,8 @@ export default function FocusTimer() {
     }, [isRunning, timeLeft])
 
     const progress = ((duration * 60 - timeLeft) / (duration * 60)) * 100
+    const completedCount = lessons.filter((lesson) => lesson.completed).length
+    const activeLessonId = lessons.find((lesson) => !lesson.completed)?.id
 
     function chooseDuration(minutes) {
         setDuration(minutes)
@@ -53,6 +57,21 @@ export default function FocusTimer() {
         setIsRunning(true)
     }
 
+    function addLesson(event) {
+        event.preventDefault()
+        const title = lessonTitle.trim()
+        if (!title) return
+
+        setLessons((current) => [...current, {
+            id: `custom-${Date.now()}`,
+            title,
+            detail: '12 min · 2 exercises',
+            completed: false,
+        }])
+        setLessonTitle('')
+        setIsLessonFormOpen(false)
+    }
+
     return (
         <main className="mx-auto max-w-360 space-y-6 px-5 py-7 sm:px-8 lg:px-12">
             <header className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
@@ -63,9 +82,8 @@ export default function FocusTimer() {
                 <p className="text-sm font-medium text-muted">One task at a time. You’ve got this.</p>
             </header>
 
-            <div className="grid items-start gap-5 xl:grid-cols-[minmax(0,1fr)_minmax(280px,340px)]">
-                <div className="space-y-5">
-                    <section className="rounded-[22px] bg-navy p-5 text-white sm:p-8 lg:p-10" aria-labelledby="focus-title">
+            <div className="grid min-w-0 grid-cols-1 items-start gap-5 xl:grid-cols-[minmax(0,1fr)_minmax(280px,340px)]">
+                    <section className="rounded-[22px] bg-navy p-5 text-white sm:p-8 lg:p-10 xl:col-start-1 xl:row-start-1" aria-labelledby="focus-title">
                         <div className="flex items-start justify-between gap-4">
                             <div className="flex min-w-0 items-center gap-3">
                                 <span className="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-lime text-lg font-extrabold text-navy" aria-hidden="true">◎</span>
@@ -110,39 +128,7 @@ export default function FocusTimer() {
                         </div>
                     </section>
 
-                    <section className="rounded-[18px] border border-border bg-white p-5 sm:p-6" aria-labelledby="sessions-title">
-                        <div className="flex items-center justify-between gap-3">
-                            <div>
-                                <h2 id="sessions-title" className="text-lg font-extrabold">Today’s sessions</h2>
-                                <p className="mt-1 text-xs text-muted">Pick up where you left off</p>
-                            </div>
-                            <span className="rounded-full bg-lilac px-3 py-1.5 text-[10px] font-extrabold text-navy">3 PLANNED</span>
-                        </div>
-                        <div className="mt-4 divide-y divide-border/70">
-                            {sessions.map((session) => {
-                                const isSelected = selectedSubject === session.subject
-                                return (
-                                    <button
-                                        key={session.title}
-                                        type="button"
-                                        onClick={() => setSelectedSubject(session.subject)}
-                                        aria-pressed={isSelected}
-                                        className={`flex w-full items-center gap-3 py-3 text-left transition ${isSelected ? 'rounded-xl bg-lilac/60 px-3' : 'hover:bg-lilac/40'}`}
-                                    >
-                                        <span className={`h-3 w-3 shrink-0 rounded-full ${session.color}`} aria-hidden="true" />
-                                        <span className="min-w-0 flex-1">
-                                            <span className="block truncate text-sm font-bold">{session.title}</span>
-                                            <span className="mt-0.5 block truncate text-xs text-muted">{session.detail}</span>
-                                        </span>
-                                        <span className="shrink-0 text-xs font-semibold text-muted">{session.time}</span>
-                                    </button>
-                                )
-                            })}
-                        </div>
-                    </section>
-                </div>
-
-                <aside className="space-y-5">
+                <aside className="space-y-5 xl:col-start-2 xl:row-span-2 xl:row-start-1">
                     <section className="rounded-[18px] border-2 border-lime bg-navy p-5 text-white sm:p-6" aria-labelledby="daily-focus-title">
                         <div className="flex items-start justify-between gap-3">
                             <div>
@@ -157,35 +143,98 @@ export default function FocusTimer() {
                         <p className="mt-3 text-xs leading-relaxed text-white/65">You’re making steady progress. Keep going!</p>
                     </section>
 
-                    <section className="rounded-[18px] border border-border bg-white p-5 sm:p-6" aria-labelledby="setup-title">
+                    <section className="rounded-[18px] border border-border bg-white p-5 sm:p-6" aria-labelledby="today-lessons-title">
                         <div className="flex items-center justify-between gap-3">
                             <div>
-                                <h2 id="setup-title" className="text-lg font-extrabold">Focus setup</h2>
-                                <p className="mt-1 text-xs text-muted">Choose a session length</p>
+                                <p className="text-[10px] font-extrabold uppercase tracking-[0.12em] text-blue">JavaScript essentials</p>
+                                <h2 id="today-lessons-title" className="mt-1 text-lg font-extrabold">Today’s lessons</h2>
                             </div>
-                            <span className="grid h-9 w-9 place-items-center rounded-full bg-lilac text-lg" aria-hidden="true">◷</span>
+                            <span className="shrink-0 rounded-full bg-lilac px-3 py-1.5 text-[10px] font-extrabold text-navy">{completedCount} OF {lessons.length} DONE</span>
                         </div>
-                        <div className="mt-5 grid grid-cols-3 gap-2" aria-label="Focus session length">
-                            {durations.map((minutes) => (
-                                <button
-                                    key={minutes}
-                                    type="button"
-                                    onClick={() => chooseDuration(minutes)}
-                                    aria-pressed={duration === minutes}
-                                    className={`rounded-xl px-2 py-3 text-center transition ${duration === minutes ? 'bg-navy text-white' : 'bg-lilac text-navy hover:bg-pink'}`}
-                                >
-                                    <span className="block text-sm font-extrabold">{minutes}</span>
-                                    <span className={`mt-0.5 block text-[10px] font-semibold ${duration === minutes ? 'text-white/65' : 'text-muted'}`}>minutes</span>
-                                </button>
-                            ))}
+                        <p className="mt-3 text-sm text-muted">Tap the circle or mark done after finishing a lesson.</p>
+                        <div className="mt-4 space-y-2.5">
+                            {lessons.map((lesson) => {
+                                const isActive = !lesson.completed && lesson.id === activeLessonId
+                                return (
+                                    <div key={lesson.id} className={`flex min-h-20.5 items-center gap-3 rounded-xl border px-3 py-3 sm:px-4 ${isActive ? 'border-2 border-lime bg-lime/20' : 'border-border'}`}>
+                                        <button
+                                            type="button"
+                                            onClick={() => setLessons((current) => current.map((item) => item.id === lesson.id ? { ...item, completed: !item.completed } : item))}
+                                            aria-label={`${lesson.completed ? 'Mark as not done' : 'Mark done'}: ${lesson.title}`}
+                                            aria-pressed={lesson.completed}
+                                            className={`grid h-9 w-9 shrink-0 place-items-center rounded-full border-2 text-sm font-extrabold ${lesson.completed ? 'border-muted bg-muted text-lime' : isActive ? 'border-lime bg-lime text-navy' : 'border-border bg-white text-navy'}`}
+                                        >
+                                            {lesson.completed ? '✓' : isActive ? '○' : ''}
+                                        </button>
+                                        <div className="min-w-0 flex-1">
+                                            <p className={`text-sm font-bold leading-snug ${lesson.completed ? 'text-muted line-through' : ''}`}>{lesson.title}</p>
+                                            <p className="mt-1 text-xs text-muted">{lesson.detail}</p>
+                                        </div>
+                                        <span className={`shrink-0 rounded-full px-2.5 py-2 text-[10px] font-extrabold ${lesson.completed ? 'bg-lilac/70 text-muted' : isActive ? 'bg-navy text-lime' : 'bg-lilac text-muted'}`}>
+                                            {lesson.completed ? 'DONE' : isActive ? 'NOW' : 'MARK DONE'}
+                                        </span>
+                                    </div>
+                                )
+                            })}
                         </div>
-                        <div className="mt-5 rounded-xl bg-lilac/70 p-4">
-                            <p className="text-[10px] font-extrabold uppercase tracking-[0.12em] text-muted">Current task</p>
-                            <p className="mt-1 text-sm font-extrabold">{selectedSubject}</p>
-                            <p className="mt-1 text-xs leading-relaxed text-muted">Keep your attention on one task until the timer ends.</p>
-                        </div>
+                        {isLessonFormOpen ? (
+                            <form className="mt-4 space-y-3" onSubmit={addLesson}>
+                                <label className="sr-only" htmlFor="new-lesson-title">Lesson title</label>
+                                <input
+                                    id="new-lesson-title"
+                                    autoFocus
+                                    required
+                                    value={lessonTitle}
+                                    onChange={(event) => setLessonTitle(event.target.value)}
+                                    placeholder="Enter a lesson title"
+                                    className="min-h-11 w-full rounded-lg border border-border px-3 text-sm outline-none focus:border-navy focus:ring-2 focus:ring-lime"
+                                />
+                                <div className="flex gap-2">
+                                    <button type="submit" className="min-h-10 flex-1 rounded-lg bg-navy px-3 text-xs font-extrabold text-white transition hover:bg-muted">Add lesson</button>
+                                    <button type="button" onClick={() => { setIsLessonFormOpen(false); setLessonTitle('') }} className="min-h-10 rounded-lg bg-lilac px-3 text-xs font-bold text-navy transition hover:bg-pink">Cancel</button>
+                                </div>
+                            </form>
+                        ) : (
+                            <button
+                                type="button"
+                                onClick={() => setIsLessonFormOpen(true)}
+                                className="mt-4 flex min-h-11 w-full items-center justify-center gap-2 rounded-lg border border-border text-xs font-extrabold uppercase text-blue transition hover:border-blue hover:bg-lilac/50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-lime"
+                            >
+                                <span className="text-lg leading-none" aria-hidden="true">+</span>
+                                Add Lesson To Session
+                            </button>
+                        )}
                     </section>
                 </aside>
+
+                <section className="rounded-[18px] border border-border bg-white p-5 sm:p-6 xl:col-start-1 xl:row-start-2" aria-labelledby="setup-title">
+                    <div className="flex items-center justify-between gap-3">
+                        <div>
+                            <h2 id="setup-title" className="text-lg font-extrabold">Focus setup</h2>
+                            <p className="mt-1 text-xs text-muted">Choose a session length</p>
+                        </div>
+                        <span className="grid h-9 w-9 place-items-center rounded-full bg-lilac text-lg" aria-hidden="true">◷</span>
+                    </div>
+                    <div className="mt-5 grid grid-cols-3 gap-2" aria-label="Focus session length">
+                        {durations.map((minutes) => (
+                            <button
+                                key={minutes}
+                                type="button"
+                                onClick={() => chooseDuration(minutes)}
+                                aria-pressed={duration === minutes}
+                                className={`rounded-xl px-2 py-3 text-center transition ${duration === minutes ? 'bg-navy text-white' : 'bg-lilac text-navy hover:bg-pink'}`}
+                            >
+                                <span className="block text-sm font-extrabold">{minutes}</span>
+                                <span className={`mt-0.5 block text-[10px] font-semibold ${duration === minutes ? 'text-white/65' : 'text-muted'}`}>minutes</span>
+                            </button>
+                        ))}
+                    </div>
+                    <div className="mt-5 rounded-xl bg-lilac/70 p-4">
+                        <p className="text-[10px] font-extrabold uppercase tracking-[0.12em] text-muted">Current task</p>
+                        <p className="mt-1 text-sm font-extrabold">{selectedSubject}</p>
+                        <p className="mt-1 text-xs leading-relaxed text-muted">Keep your attention on one task until the timer ends.</p>
+                    </div>
+                </section>
             </div>
         </main>
     )
