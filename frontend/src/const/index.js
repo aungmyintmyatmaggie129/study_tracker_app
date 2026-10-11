@@ -1,5 +1,5 @@
 export const NavLinks = [
-    ['Home', '/'],
+    ['Home', '/home'],
     ['Dashboard', '/dashboard'],
     ['Subjects', '/subjects'],
     ['Progress', '/progress'],

@@ -4,7 +4,7 @@ import { NavLinks } from '../const/index.js'
 export default function NavBar() {
     return (
         <nav className="flex flex-wrap items-center justify-between gap-5" aria-label="Main navigation">
-            <NavLink to="/" className="flex items-center gap-2.5">
+            <NavLink to="/home" className="flex items-center gap-2.5">
                 <span className="grid h-9 w-9 place-items-center rounded-[10px] bg-navy text-sm font-extrabold text-lime">S</span>
                 <span className="text-[15px] font-extrabold tracking-tight">STUDY MODE</span>
             </NavLink>
