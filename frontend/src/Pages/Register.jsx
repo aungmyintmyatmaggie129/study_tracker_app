@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import registerHero from '../assets/images/register_hero.png'
 import brandHexagon from '../assets/images/login-ui/hexagon-mobile.svg'
 import heroHexagon from '../assets/images/login-ui/hexagon-desktop.svg'
@@ -11,8 +11,8 @@ import signalIcon from '../assets/images/login-ui/signal.svg'
 import wifiIcon from '../assets/images/login-ui/wifi.svg'
 import batteryIcon from '../assets/images/login-ui/battery.svg'
 import './Register.css'
-import userAPI from "../../apis/userAPI";
-
+// import userAPI from "../../apis/userAPI";
+import axios from 'axios'
 const apiBaseUrl = import.meta.env.VITE_API_URL || '/api'
 const registrationUrl = `${apiBaseUrl.replace(/\/$/, '')}/users/register`
 
@@ -26,17 +26,33 @@ export default function Register() {
     const [showConfirmPassword, setShowConfirmPassword] = useState(false)
     const [notice, setNotice] = useState('')
     const [isSubmitting, setIsSubmitting] = useState(false)
+    const navigate = useNavigate('');
 
     const handleSubmit = async(e) => {
         e.preventDefault();
+        setNotice('');
         const user = {name,email,password,confirmPassword}
         // console.log(user);
         
+        if(password !== confirmPassword){
+            setNotice("Passwords do not match.");
+            return
+        }
+        setIsSubmitting(true);
         try{
-            const res = await userAPI.post("/users/register", user);
+            const res = await axios.post(`http://localhost:4000/api/users/register`, user);
         console.log(res);
+        setNotice("Your account have been created. You can now login.")
+        if(res.status == 200){
+            navigate('/')
+        }else{
+            setNotice("Unable to create your account.")
+        }
         }catch(error){
             console.log(error)
+            setNotice(error.message || 'Unable to reach the registration service.')
+        }finally{
+            setIsSubmitting(false);
         }
     }
 
@@ -44,7 +60,7 @@ export default function Register() {
     // async function handleSubmit(event) {
     //     event.preventDefault()
     //     setNotice('')
-        
+    
     //     console.log({name, email, password, confirmPassword});
 
     //     const formElement = event.currentTarget
