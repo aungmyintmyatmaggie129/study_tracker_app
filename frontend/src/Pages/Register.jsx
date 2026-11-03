@@ -7,12 +7,11 @@ import eyeIcon from '../assets/images/login-ui/eye.svg'
 import divider from '../assets/images/login-ui/divider.svg'
 import googleIcon from '../assets/images/login-ui/google.svg'
 import githubIcon from '../assets/images/login-ui/github.svg'
-import signalIcon from '../assets/images/login-ui/signal.svg'
-import wifiIcon from '../assets/images/login-ui/wifi.svg'
-import batteryIcon from '../assets/images/login-ui/battery.svg'
 import './Register.css'
 // import userAPI from "../../apis/userAPI";
 import axios from 'axios'
+
+
 const apiBaseUrl = import.meta.env.VITE_API_URL || '/api'
 const registrationUrl = `${apiBaseUrl.replace(/\/$/, '')}/users/register`
 
@@ -28,73 +27,33 @@ export default function Register() {
     const [isSubmitting, setIsSubmitting] = useState(false)
     const navigate = useNavigate('');
 
-    const handleSubmit = async(e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         setNotice('');
-        const user = {name,email,password,confirmPassword}
+        const user = { name, email, password, confirmPassword }
         // console.log(user);
-        
-        if(password !== confirmPassword){
+
+        if (password !== confirmPassword) {
             setNotice("Passwords do not match.");
             return
         }
         setIsSubmitting(true);
-        try{
+        try {
             const res = await axios.post(`http://localhost:4000/api/users/register`, user);
-        console.log(res);
-        setNotice("Your account have been created. You can now login.")
-        if(res.status == 200){
-            navigate('/')
-        }else{
-            setNotice("Unable to create your account.")
-        }
-        }catch(error){
-            console.log(error)
-            setNotice(error.message || 'Unable to reach the registration service.')
-        }finally{
+            console.log(res);
+            setNotice("Your account have been created. You can now login.")
+            if (res.status >= 200 && res.status <= 299) {
+                navigate('/')
+            } else {
+                setNotice("Unable to create your account.")
+            }
+        } catch (error) {
+            // console.log(error.response.data.errors.email.msg)
+            setNotice(error.response?.data?.errors?.email?.msg || 'Unable to reach the registration service.')
+        } finally {
             setIsSubmitting(false);
         }
     }
-
-    // console.log({name, email, password, confirmPassword});
-    // async function handleSubmit(event) {
-    //     event.preventDefault()
-    //     setNotice('')
-    
-    //     console.log({name, email, password, confirmPassword});
-
-    //     const formElement = event.currentTarget
-    //     const formData = new FormData(formElement)
-    //     const passwordCheck = password;
-    //     const confirmPassword = confirmPassword;
-
-    //     if (passwordCheck !== confirmPassword) {
-    //         setNotice('Passwords do not match.')
-    //         return
-    //     }
-
-    //     setIsSubmitting(true)
-    //     try {
-    //         // registrationUrl
-    //         const response = await axios.post("http://localhost:4000/api/users/register", {
-    //             name: name,
-    //             email: email,
-    //             password: password,
-    //         })
-    //         const result = await response.json({name, email, password})
-
-    //         if (!response.status === 200) {
-    //             throw new Error(result.message || 'Unable to create your account.')
-    //         }
-
-    //         setNotice('Your account has been created. You can now log in.')
-    //         formElement.reset()
-    //     } catch (error) {
-    //         setNotice(error.message || 'Unable to reach the registration service.')
-    //     } finally {
-    //         setIsSubmitting(false)
-    //     }
-    // }
 
     return (
         <main className="register-page">
@@ -111,14 +70,6 @@ export default function Register() {
             </section>
 
             <section className="register-panel" aria-label="Create your account">
-                <div className="register-status-bar" aria-hidden="true">
-                    <span>9:41</span>
-                    <span className="register-status-icons">
-                        <img src={signalIcon} alt="" />
-                        <img src={wifiIcon} alt="" />
-                        <img src={batteryIcon} alt="" />
-                    </span>
-                </div>
 
                 <div className="register-panel-content">
                     <div className="register-mobile-brand register-brand">
@@ -142,43 +93,43 @@ export default function Register() {
                             <div className="register-field">
                                 <label htmlFor="register-name">Full Name</label>
                                 <div className="register-input-wrap">
-                                    <input 
-                                    id="register-name" 
-                                    type="text" 
-                                    placeholder="Alex Wong" 
-                                    autoComplete="name" 
-                                    required 
-                                    value={name}
-                                    onChange={(e) => setName(e.target.value)}
+                                    <input
+                                        id="register-name"
+                                        type="text"
+                                        placeholder="Alex Wong"
+                                        autoComplete="name"
+                                        required
+                                        value={name}
+                                        onChange={(e) => setName(e.target.value)}
                                     />
                                 </div>
                             </div>
                             <div className="register-field">
                                 <label htmlFor="register-email">Email Address</label>
                                 <div className="register-input-wrap">
-                                    <input 
-                                    id="register-email" 
-                                    type="email" 
-                                    placeholder="alex@aura.com" 
-                                    autoComplete="email" 
-                                    required 
-                                    value={email}
-                                    onChange={(e) => setEmail(e.target.value)}
+                                    <input
+                                        id="register-email"
+                                        type="email"
+                                        placeholder="alex@aura.com"
+                                        autoComplete="email"
+                                        required
+                                        value={email}
+                                        onChange={(e) => setEmail(e.target.value)}
                                     />
                                 </div>
                             </div>
                             <div className="register-field">
                                 <label htmlFor="register-password">Password</label>
                                 <div className="register-input-wrap">
-                                    <input 
-                                    id="register-password" 
-                                    type={showPassword ? 'text' : 'password'} 
-                                    placeholder="••••••••" 
-                                    autoComplete="new-password" 
-                                    minLength="6" 
-                                    required 
-                                    value={password}
-                                    onChange={(e) => setPassword(e.target.value)}
+                                    <input
+                                        id="register-password"
+                                        type={showPassword ? 'text' : 'password'}
+                                        placeholder="••••••••"
+                                        autoComplete="new-password"
+                                        minLength="6"
+                                        required
+                                        value={password}
+                                        onChange={(e) => setPassword(e.target.value)}
                                     />
                                     <button className="register-password-toggle" type="button" aria-label={showPassword ? 'Hide password' : 'Show password'} onClick={() => setShowPassword((visible) => !visible)}>
                                         <img src={eyeIcon} alt="" />
@@ -188,16 +139,16 @@ export default function Register() {
                             <div className="register-field">
                                 <label htmlFor="register-confirm-password">Confirm Password</label>
                                 <div className="register-input-wrap">
-                                    <input 
-                                    id="register-confirm-password" 
-                                    name="confirmPassword" 
-                                    type={showConfirmPassword ? 'text' : 'password'} 
-                                    placeholder="••••••••" 
-                                    autoComplete="new-password" 
-                                    minLength="6" 
-                                    required 
-                                    value={confirmPassword}
-                                    onChange={(e) => setConfirmPassword(e.target.value)}
+                                    <input
+                                        id="register-confirm-password"
+                                        name="confirmPassword"
+                                        type={showConfirmPassword ? 'text' : 'password'}
+                                        placeholder="••••••••"
+                                        autoComplete="new-password"
+                                        minLength="6"
+                                        required
+                                        value={confirmPassword}
+                                        onChange={(e) => setConfirmPassword(e.target.value)}
                                     />
                                     <button className="register-password-toggle" type="button" aria-label={showConfirmPassword ? 'Hide confirm password' : 'Show confirm password'} onClick={() => setShowConfirmPassword((visible) => !visible)}>
                                         <img src={eyeIcon} alt="" />
