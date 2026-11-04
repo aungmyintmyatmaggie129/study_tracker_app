@@ -1,5 +1,8 @@
-const { default: axios } = require("axios");
+import axios from 'axios'
 
-const userAPI = axios.defaults.baseURL("http://localhost:4000/api");
+const userAPI = axios.create({
+	baseURL: import.meta.env.VITE_API_URL || '/api',
+	withCredentials: true,
+})
 
 export default userAPI;

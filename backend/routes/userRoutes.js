@@ -3,7 +3,6 @@ const userController = require("../controllers/userController");
 const router = express.Router();
 const { body, validationResult } = require("express-validator");
 const createValidator = require("../validation/createValidator");
-const createToken = require("../token/createToken");
 const User = require("../models/user");
 
 router.get("/", userController.get)
@@ -19,7 +18,10 @@ router.post("/register", [
     body('password').notEmpty()
 ], createValidator, userController.register)
 
-router.post("/login", userController.login)
+router.post("/login", [
+    body('email').trim().isEmail().withMessage('Please provide a valid email address.'),
+    body('password').notEmpty().withMessage('Password is required.'),
+], createValidator, userController.login)
 
 module.exports = router;
 

@@ -35,21 +35,13 @@ userSchema.statics.register = async function (name, email, password) {
 }
 
 userSchema.statics.login = async function (email, password) {
-    try {
-        let user = await this.findOne({ email: email });
-        if (!user) {
-            throw new Error("Incorrect Email! Please try to Register if you haven't register.");
-        }
-        let passwordCheck = bcrypt.compare(password, user.password);
-        if(!passwordCheck){
-            throw new Error("Your Password is incorrect! Please try again.")
-        }else{
-            return user;
-        }
-    } catch (error) {
-        throw new Error(error || "Cannot reach to login service");
+    const user = await this.findOne({ email: email.trim() });
+    if (!user) {
+        return null;
     }
 
+    const passwordMatches = await bcrypt.compare(password, user.password);
+    return passwordMatches ? user : null;
 }
 
 const User = mongoose.model("User", userSchema);
