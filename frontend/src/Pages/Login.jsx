@@ -1,5 +1,6 @@
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import { useAuthContext } from '../contexts/useAuthContext.js'
 import loginHero from '../assets/images/login_hero.png'
 import brandHexagon from '../assets/images/login-ui/hexagon-mobile.svg'
 import heroHexagon from '../assets/images/login-ui/hexagon-desktop.svg'
@@ -11,10 +12,33 @@ import githubIcon from '../assets/images/login-ui/github.svg'
 export default function Login() {
     const [showPassword, setShowPassword] = useState(false)
     const [notice, setNotice] = useState('')
+    const [isSubmitting, setIsSubmitting] = useState(false)
+    const navigate = useNavigate()
+    const { login } = useAuthContext()
 
-    function handleSubmit(event) {
+    async function handleSubmit(event) {
         event.preventDefault()
-        setNotice('Sign-in is not connected to an account service yet.')
+        setNotice('')
+        setIsSubmitting(true)
+
+        const formData = new FormData(event.currentTarget)
+        const credentials = {
+            email: formData.get('email'),
+            password: formData.get('password'),
+        }
+
+        try {
+            await login(credentials)
+            navigate('/home')
+        } catch (error) {
+            setNotice(
+                error.response?.data?.errors?.email?.msg
+                || error.response?.data?.message
+                || 'Unable to reach the login service.'
+            )
+        } finally {
+            setIsSubmitting(false)
+        }
     }
 
     return (
@@ -75,7 +99,9 @@ export default function Login() {
                             </div>
                         </div>
 
-                        <button className="login-submit" type="submit">Log In</button>
+                        <button className="login-submit" type="submit" disabled={isSubmitting}>
+                            {isSubmitting ? 'Logging In...' : 'Log In'}
+                        </button>
 
                         <div className="login-social">
                             <div className="login-divider" aria-label="or continue with">

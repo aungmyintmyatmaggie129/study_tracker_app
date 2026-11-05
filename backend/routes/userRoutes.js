@@ -4,8 +4,10 @@ const router = express.Router();
 const { body, validationResult } = require("express-validator");
 const createValidator = require("../validation/createValidator");
 const User = require("../models/user");
+const requireAuth = require("../middleware/requireAuth");
 
 router.get("/", userController.get)
+router.get("/me", requireAuth, userController.me)
 //Check the validation
 router.post("/register", [
     body('name').notEmpty(),

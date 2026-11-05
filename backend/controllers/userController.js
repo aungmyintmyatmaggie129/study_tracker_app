@@ -13,6 +13,11 @@ const userController = {
         let users = await User.find();
         res.status(200).json({"users": users});
     },
+    me: (req, res) => {
+        const user = req.user.toObject();
+        delete user.password;
+        return res.status(200).json({ user });
+    },
     login: async (req, res) => {
         try {
             const { email, password } = req.body;

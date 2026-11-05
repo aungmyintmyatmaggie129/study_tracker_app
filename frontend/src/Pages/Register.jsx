@@ -10,6 +10,7 @@ import githubIcon from '../assets/images/login-ui/github.svg'
 import './Register.css'
 // import userAPI from "../../apis/userAPI";
 import axios from 'axios'
+import { useAuthContext } from '../contexts/useAuthContext.js'
 
 
 const apiBaseUrl = import.meta.env.VITE_API_URL || '/api'
@@ -25,7 +26,8 @@ export default function Register() {
     const [showConfirmPassword, setShowConfirmPassword] = useState(false)
     const [notice, setNotice] = useState('')
     const [isSubmitting, setIsSubmitting] = useState(false)
-    const navigate = useNavigate('');
+    const navigate = useNavigate();
+    const { authenticate } = useAuthContext()
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -39,17 +41,19 @@ export default function Register() {
         }
         setIsSubmitting(true);
         try {
-            const res = await axios.post(`http://localhost:4000/api/users/register`, user);
-            console.log(res);
-            setNotice("Your account have been created. You can now login.")
+            const res = await axios.post(`${registrationUrl}`, user, { withCredentials: true });
             if (res.status >= 200 && res.status <= 299) {
-                navigate('/')
+                authenticate(res.data.responseUser)
+                navigate('/home')
             } else {
                 setNotice("Unable to create your account.")
             }
         } catch (error) {
-            // console.log(error.response.data.errors.email.msg)
-            setNotice(error.response?.data?.errors?.email?.msg || 'Unable to reach the registration service.')
+            setNotice(
+                error.response?.data?.errors?.email?.msg
+                || error.response?.data?.message
+                || 'Unable to reach the registration service.'
+            )
         } finally {
             setIsSubmitting(false);
         }
