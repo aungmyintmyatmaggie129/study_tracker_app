@@ -2,8 +2,8 @@ import { useCallback, useEffect, useMemo, useReducer } from 'react'
 import axios from 'axios'
 import { authContext } from './auth-context.js'
 
-const apiBaseUrl = import.meta.env.VITE_API_URL || '/api'
-const usersUrl = `${apiBaseUrl.replace(/\/$/, '')}/users`
+const apiBaseUrl = import.meta.env.VITE_API_URL
+const usersUrl = `${apiBaseUrl.replace(/\/$/, '')}/api/users`
 
 const initialState = {
     status: 'checking',
