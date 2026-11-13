@@ -13,8 +13,8 @@ import axios from 'axios'
 import { useAuthContext } from '../contexts/useAuthContext.js'
 
 
-const apiBaseUrl = import.meta.env.VITE_API_URL || '/api'
-const registrationUrl = `${apiBaseUrl.replace(/\/$/, '')}/users/register`
+const apiBaseUrl = import.meta.env.VITE_API_URL
+const registrationUrl = `${apiBaseUrl.replace(/\/$/, '')}/api/users/register`
 
 export default function Register() {
 
