@@ -10,23 +10,40 @@ Study Tracker is a responsive web app for organizing study subjects, planning le
 - **Hard-to-see progress:** Streak, weekly activity, lesson completion, and goal components make progress visible at a glance.
 - **Mobile and desktop use:** Responsive layouts adapt the main study tools to smaller screens as well as desktop.
 
+
 ## Features
 
-- Account registration and login screens.
-- Cookie-based authentication backed by the Express API.
-- Protected routes for the home page, dashboard, subjects, focus timer, and progress.
-- A searchable, filterable subject catalog.
-- Dashboard cards for study plans, streaks, weekly activity, goals, and upcoming work.
-- A focus timer with selectable durations and a live progress indicator.
-- In-session lesson tracking, including marking lessons complete and adding a lesson.
+- **Account Registration and Login:** User registration and login screens for account management.
+- **Cookie-Based Authentication:** Secure authentication handled through the Express API using cookies.
+- **Protected Routes:** Access-controlled pages for the home page, dashboard, subjects, focus timer, and progress.
+- **Subject Catalog:** Searchable and filterable subject catalog for easily finding and organizing subjects.
+- **Interactive Dashboard:** Overview cards displaying study plans, learning streaks, weekly activity, goals, and upcoming tasks.
+- **Focus Timer:** Customizable focus sessions with selectable durations and a live progress indicator.
+- **Lesson Tracking:** Track learning activities during study sessions, mark lessons as completed, and add new lessons.
 
 > **Current data status:** Several dashboard statistics, study plans, and the daily focus goal are sample UI data. Focus timer settings and lesson changes are held in frontend state and are not saved across reloads. The progress page is currently a placeholder. The backend has user authentication and subject API routes, but subject create, detail, update, and delete handlers are placeholders.
 
-## Tech stack
 
-- **Frontend:** React, Vite, React Router, Tailwind CSS, Axios
-- **Backend:** Node.js, Express, MongoDB with Mongoose
-- **Authentication:** JWT in an HTTP-only cookie; passwords are hashed with bcrypt
+## Tech Stack
+
+### Frontend
+- **React** – Building reusable UI components.
+- **Vite** – Fast development server and build tool.
+- **React Router** – Client-side routing and navigation.
+- **Tailwind CSS** – Utility-first styling and responsive design.
+- **Axios** – HTTP requests to the backend API.
+
+### Backend
+- **Node.js** – JavaScript runtime environment.
+- **Express.js** – REST API development and server-side routing.
+- **MongoDB** – NoSQL database for storing application data.
+- **Mongoose** – MongoDB object modeling and schema validation.
+
+### Authentication & Security
+- **JWT (JSON Web Token)** – Token-based user authentication.
+- **HTTP-only Cookies** – Secure cookie storage for authentication tokens.
+- **bcrypt** – Password hashing to protect user credentials.
+
 
 ## Project structure
 
