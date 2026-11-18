@@ -12,6 +12,7 @@ import githubIcon from '../assets/images/login-ui/github.svg'
 export default function Login() {
     const [showPassword, setShowPassword] = useState(false)
     const [notice, setNotice] = useState('')
+    const [errors, setErrors] = useState({})
     const [isSubmitting, setIsSubmitting] = useState(false)
     const navigate = useNavigate()
     const { login } = useAuthContext()
@@ -19,23 +20,38 @@ export default function Login() {
     async function handleSubmit(event) {
         event.preventDefault()
         setNotice('')
-        setIsSubmitting(true)
-
         const formData = new FormData(event.currentTarget)
         const credentials = {
-            email: formData.get('email'),
+            email: formData.get('email').trim(),
             password: formData.get('password'),
         }
+        const nextErrors = {}
+
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(credentials.email)) nextErrors.email = 'Please enter a valid email address.'
+        if (!credentials.password) nextErrors.password = 'Password is required.'
+
+        setErrors(nextErrors)
+        if (Object.keys(nextErrors).length) {
+            setNotice('Please correct the highlighted fields.')
+            return
+        }
+
+        setIsSubmitting(true)
 
         try {
             await login(credentials)
             navigate('/home')
         } catch (error) {
-            setNotice(
-                error.response?.data?.errors?.email?.msg
-                || error.response?.data?.message
-                || 'Unable to reach the login service.'
-            )
+            const serverErrors = error.response?.data?.errors
+            if (serverErrors) {
+                setErrors({
+                    email: serverErrors.email?.msg,
+                    password: serverErrors.password?.msg,
+                })
+                setNotice('Please correct the highlighted fields.')
+            } else {
+                setNotice(error.response?.data?.message || 'Unable to reach the login service.')
+            }
         } finally {
             setIsSubmitting(false)
         }
@@ -72,25 +88,44 @@ export default function Login() {
                             <p>Please enter your details to sign in</p>
                         </div>
                     </div>
-
                     <form className="login-form-stack" onSubmit={handleSubmit}>
                         <div className="login-fields">
                             <div className="login-field">
                                 <label htmlFor="login-email">Email Address</label>
                                 <div className="login-input-wrap">
-                                    <input id="login-email" name="email" type="email" placeholder="alex@aura.com" autoComplete="email" required />
+                                    <input
+                                        id="login-email"
+                                        name="email"
+                                        type="email"
+                                        placeholder="alex@aura.com"
+                                        autoComplete="email"
+                                        required
+                                        aria-invalid={Boolean(errors.email)}
+                                        onChange={() => setErrors((current) => ({ ...current, email: undefined }))}
+                                    />
                                 </div>
+                                {errors.email && <p className="login-field-error">{errors.email}</p>}
                             </div>
 
                             <div className="login-password-field">
                                 <div className="login-field">
                                     <label htmlFor="login-password">Password</label>
                                     <div className="login-input-wrap">
-                                        <input id="login-password" name="password" type={showPassword ? 'text' : 'password'} placeholder="••••••••" autoComplete="current-password" required />
+                                        <input
+                                            id="login-password"
+                                            name="password"
+                                            type={showPassword ? 'text' : 'password'}
+                                            placeholder="••••••••"
+                                            autoComplete="current-password"
+                                            required
+                                            aria-invalid={Boolean(errors.password)}
+                                            onChange={() => setErrors((current) => ({ ...current, password: undefined }))}
+                                        />
                                         <button className="login-password-toggle" type="button" aria-label={showPassword ? 'Hide password' : 'Show password'} onClick={() => setShowPassword((visible) => !visible)}>
                                             <img src={eyeIcon} alt="" />
                                         </button>
                                     </div>
+                                    {errors.password && <p className="login-field-error">{errors.password}</p>}
                                 </div>
                                 <div className="login-form-options">
                                     <label className="login-remember"><input type="checkbox" name="remember" /> <span>Remember me</span></label>
