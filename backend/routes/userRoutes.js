@@ -10,18 +10,23 @@ router.get("/", userController.get)
 router.get("/me", requireAuth, userController.me)
 //Check the validation
 router.post("/register", [
-    body('name').notEmpty(),
-    body('email').custom( async (value) => {
+    body('name').trim().isLength({ min: 2 }).withMessage('Name must be at least 2 characters.'),
+    body('email').trim().normalizeEmail().isEmail().withMessage('Please provide a valid email address.').bail()
+    .custom( async (value) => {
         let userEmail = await User.findOne({email: value});
         if(userEmail){
             throw new Error("Your email already existed! Please try to Login.");
         }
-    }).notEmpty(),
-    body('password').notEmpty()
+    }),
+    body('password').isLength({ min: 6 }).withMessage('Password must be at least 6 characters.'),
+    body('confirmPassword').custom((value, { req }) => {
+        if (value !== req.body.password) throw new Error('Passwords do not match.');
+        return true;
+    })
 ], createValidator, userController.register)
 
 router.post("/login", [
-    body('email').trim().isEmail().withMessage('Please provide a valid email address.'),
+    body('email').trim().normalizeEmail().isEmail().withMessage('Please provide a valid email address.'),
     body('password').notEmpty().withMessage('Password is required.'),
 ], createValidator, userController.login)
 
