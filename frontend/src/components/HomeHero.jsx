@@ -1,5 +1,6 @@
 import { NavLink } from 'react-router-dom'
 import { useHomeContext } from '../contexts/useHomeContext.js'
+import coffeeCupIcon from '../assets/images/coffee-cup.png'
 
 export default function HomeHero() {
     const { welcome } = useHomeContext()
@@ -41,7 +42,7 @@ export default function HomeHero() {
                 </div>
                 <div className="mt-4 grid grid-cols-2 gap-2.5">
                     <div className="flex h-[62px] items-center gap-2.5 rounded-[10px] bg-york px-3">
-                        <span className="text-lg">♨</span>
+                        <img src={coffeeCupIcon} alt="" className="h-6 w-6 object-contain" />
                         <span>
                             <strong className="block text-[15px] leading-none">{welcome.streakDays} days</strong>
                             <small className="mt-1 block text-[9px] font-extrabold uppercase">Current streak</small>

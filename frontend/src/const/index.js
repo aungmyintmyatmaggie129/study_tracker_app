@@ -1,3 +1,9 @@
+import htmlIcon from '../assets/images/html.png'
+import cssIcon from '../assets/images/css-3.png'
+import javascriptIcon from '../assets/images/javascript.png'
+import reactIcon from '../assets/images/react.png'
+import pythonIcon from '../assets/images/python.png'
+
 export const NavLinks = [
     ['Home', '/home'],
     ['Dashboard', '/dashboard'],
@@ -37,11 +43,11 @@ export const DaysOfWeek = [
 ]
 
 export const HomeSubjects = [
-    { name: 'HTML', icon: 'HTML', progress: 75, lessonsCompleted: 12, lessonCount: 16, color: 'bg-york' },
-    { name: 'CSS', icon: 'CSS', progress: 64, lessonsCompleted: 9, lessonCount: 14, color: 'bg-pink' },
-    { name: 'JavaScript', icon: 'JS', progress: 75, lessonsCompleted: 18, lessonCount: 24, color: 'bg-lime', active: true },
-    { name: 'React', icon: '▣', progress: 35, lessonsCompleted: 7, lessonCount: 20, color: 'bg-pink' },
-    { name: 'Python', icon: 'PY', progress: 28, lessonsCompleted: 5, lessonCount: 18, color: 'bg-york' },
+    { name: 'HTML', icon: htmlIcon, progress: 75, lessonsCompleted: 12, lessonCount: 16, color: 'bg-york' },
+    { name: 'CSS', icon: cssIcon, progress: 64, lessonsCompleted: 9, lessonCount: 14, color: 'bg-pink' },
+    { name: 'JavaScript', icon: javascriptIcon, progress: 75, lessonsCompleted: 18, lessonCount: 24, color: 'bg-lime', active: true },
+    { name: 'React', icon: reactIcon, progress: 35, lessonsCompleted: 7, lessonCount: 20, color: 'bg-pink' },
+    { name: 'Python', icon: pythonIcon, progress: 28, lessonsCompleted: 5, lessonCount: 18, color: 'bg-york' },
 ]
 
 export const SubjectCatalogFilters = ['All', 'HTML', 'CSS', 'JavaScript', 'React', 'Python']
@@ -49,7 +55,7 @@ export const SubjectCatalogFilters = ['All', 'HTML', 'CSS', 'JavaScript', 'React
 export const SubjectCatalog = [
     {
         name: 'HTML',
-        icon: '</>',
+        icon: htmlIcon,
         description: 'Build a strong foundation in semantic HTML and accessible page structure.',
         completedLessons: 12,
         totalLessons: 16,
@@ -60,7 +66,7 @@ export const SubjectCatalog = [
     },
     {
         name: 'CSS',
-        icon: 'CSS',
+        icon: cssIcon,
         description: 'Create responsive layouts with modern CSS, Flexbox, and Grid.',
         completedLessons: 9,
         totalLessons: 14,
@@ -71,7 +77,7 @@ export const SubjectCatalog = [
     },
     {
         name: 'JavaScript',
-        icon: 'JS',
+        icon: javascriptIcon,
         description: 'Learn the language of the web, from fundamentals to async code.',
         completedLessons: 18,
         totalLessons: 24,
@@ -82,7 +88,7 @@ export const SubjectCatalog = [
     },
     {
         name: 'React',
-        icon: '⚛',
+        icon: reactIcon,
         description: 'Build interactive interfaces with components, hooks, and state.',
         completedLessons: 7,
         totalLessons: 20,
@@ -93,7 +99,7 @@ export const SubjectCatalog = [
     },
     {
         name: 'Python',
-        icon: 'PY',
+        icon: pythonIcon,
         description: 'Explore Python basics, problem solving, and useful automation.',
         completedLessons: 5,
         totalLessons: 18,

@@ -7,7 +7,9 @@ export default function SubjectCard({ subject }) {
                 to="/subjects"
                 className={`inline-flex min-h-[41px] items-center gap-1.5 rounded-full border px-2.5 text-[11px] font-bold md:hidden ${subject.active ? 'border-lime bg-navy text-white' : 'border-border bg-white text-navy'}`}
             >
-                <span className={`grid h-6 w-6 place-items-center rounded-md text-[8px] font-extrabold text-navy ${subject.color}`}>{subject.icon}</span>
+                <span className={`grid h-6 w-6 place-items-center rounded-md ${subject.color}`}>
+                    <img src={subject.icon} alt="" className="h-4 w-4 object-contain" />
+                </span>
                 {subject.name}
             </NavLink>
             <NavLink
@@ -15,7 +17,9 @@ export default function SubjectCard({ subject }) {
                 className={`hidden min-h-[148px] flex-col justify-between rounded-[16px] border p-4 shadow-[0_3px_10px_rgba(12,26,43,0.06)] md:flex ${subject.active ? 'border-[3px] border-lime bg-navy text-white' : 'border-border bg-white text-navy'}`}
             >
                 <span className="flex items-center justify-between">
-                    <span className={`grid h-10 w-10 place-items-center rounded-[9px] text-[11px] font-extrabold text-navy ${subject.color}`}>{subject.icon}</span>
+                    <span className={`grid h-10 w-10 place-items-center rounded-[9px] ${subject.color}`}>
+                        <img src={subject.icon} alt="" className="h-7 w-7 object-contain" />
+                    </span>
                     <span className={`text-[12px] font-bold ${subject.active ? 'text-lime' : 'text-blue'}`}>{subject.progress}%</span>
                 </span>
                 <span>
@@ -34,7 +38,9 @@ export function MainSubjectCard({ subject }) {
     return (
         <article className="rounded-[16px] border border-border/70 bg-white p-4 shadow-[0_5px_18px_rgba(12,26,43,0.06)] sm:p-5 md:rounded-[18px] md:p-6">
             <div className="flex items-start gap-3.5">
-                <span className={`grid h-11 w-11 shrink-0 place-items-center rounded-[11px] text-[12px] font-extrabold text-navy sm:h-12 sm:w-12 ${subject.color}`} aria-hidden="true">{subject.icon}</span>
+                <span className={`grid h-11 w-11 shrink-0 place-items-center rounded-[11px] sm:h-12 sm:w-12 ${subject.color}`} aria-hidden="true">
+                    <img src={subject.icon} alt="" className="h-8 w-8 object-contain" />
+                </span>
                 <div className="min-w-0 flex-1">
                     <div className="flex items-start justify-between gap-2">
                         <h2 className="truncate text-[15px] font-extrabold tracking-tight md:text-[17px]">{subject.name}</h2>
