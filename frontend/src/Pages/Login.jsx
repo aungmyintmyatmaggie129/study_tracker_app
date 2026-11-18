@@ -2,12 +2,10 @@ import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useAuthContext } from '../contexts/useAuthContext.js'
 import loginHero from '../assets/images/login_hero.png'
-import brandHexagon from '../assets/images/login-ui/hexagon-mobile.svg'
-import heroHexagon from '../assets/images/login-ui/hexagon-desktop.svg'
-import eyeIcon from '../assets/images/login-ui/eye.svg'
-import divider from '../assets/images/login-ui/divider.svg'
-import googleIcon from '../assets/images/login-ui/google.svg'
-import githubIcon from '../assets/images/login-ui/github.svg'
+import eyeIcon from '../assets/images/login-ui/eye.png'
+import eyeCloseIcon from "../assets/images/login-ui/eyeclose.png"
+import googleIcon from '../assets/images/login-ui/google.png'
+import githubIcon from '../assets/images/login-ui/github.png'
 
 export default function Login() {
     const [showPassword, setShowPassword] = useState(false)
@@ -60,24 +58,15 @@ export default function Login() {
     return (
         <main className="login-page">
             <section className="login-hero" style={{ '--login-hero-image': `url(${loginHero})` }}>
-                <div className="login-brand">
-                    <span className="login-brand-mark"><img src={heroHexagon} alt="" /></span>
-                    <span>Aura SaaS</span>
-                </div>
                 <div className="login-hero-copy">
                     <h1>Supercharge your creative workspace</h1>
                     <p>Join thousands of developers and teams utilizing Aura to orchestrate stunning real-time analytics with unparalleled ease.</p>
                 </div>
-                <p className="login-copyright">© 2024 Aura Inc. All rights reserved.</p>
+                <p className="login-copyright">© 2026 Study Tracker Inc. All rights reserved.</p>
             </section>
 
             <section className="login-panel" aria-label="Sign in">
                 <div className="login-panel-content">
-                    <div className="login-mobile-brand login-brand">
-                        <span className="login-brand-mark"><img src={brandHexagon} alt="" /></span>
-                        <span>Aura SaaS</span>
-                    </div>
-
                     <div className="login-heading">
                         <div className="login-heading-desktop">
                             <h1>Log in to your account</h1>
@@ -122,7 +111,7 @@ export default function Login() {
                                             onChange={() => setErrors((current) => ({ ...current, password: undefined }))}
                                         />
                                         <button className="login-password-toggle" type="button" aria-label={showPassword ? 'Hide password' : 'Show password'} onClick={() => setShowPassword((visible) => !visible)}>
-                                            <img src={eyeIcon} alt="" />
+                                            {showPassword ? <img src={eyeCloseIcon} alt="" /> : <img src={eyeIcon} alt="" />}
                                         </button>
                                     </div>
                                     {errors.password && <p className="login-field-error">{errors.password}</p>}
@@ -139,11 +128,6 @@ export default function Login() {
                         </button>
 
                         <div className="login-social">
-                            <div className="login-divider" aria-label="or continue with">
-                                <img src={divider} alt="" />
-                                <span>or continue with</span>
-                                <img src={divider} alt="" />
-                            </div>
                             <div className="login-social-buttons">
                                 <button className="login-social-button" type="button" onClick={() => setNotice('Google sign-in is not available yet.')}>
                                     <img src={googleIcon} alt="" /><span>Google</span>

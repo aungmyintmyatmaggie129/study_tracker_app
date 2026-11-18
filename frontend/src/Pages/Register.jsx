@@ -1,12 +1,10 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import registerHero from '../assets/images/register_hero.png'
-import brandHexagon from '../assets/images/login-ui/hexagon-mobile.svg'
-import heroHexagon from '../assets/images/login-ui/hexagon-desktop.svg'
-import eyeIcon from '../assets/images/login-ui/eye.svg'
-import divider from '../assets/images/login-ui/divider.svg'
-import googleIcon from '../assets/images/login-ui/google.svg'
-import githubIcon from '../assets/images/login-ui/github.svg'
+import eyeIcon from '../assets/images/login-ui/eye.png'
+import eyeCloseIcon from "../assets/images/login-ui/eyeclose.png";
+import googleIcon from '../assets/images/login-ui/google.png'
+import githubIcon from '../assets/images/login-ui/github.png'
 import './Register.css'
 // import userAPI from "../../apis/userAPI";
 import axios from 'axios'
@@ -79,25 +77,16 @@ export default function Register() {
     return (
         <main className="register-page">
             <section className="register-hero" style={{ '--register-hero-image': `url(${registerHero})` }}>
-                <div className="register-brand">
-                    <span className="register-brand-mark"><img src={heroHexagon} alt="" /></span>
-                    <span>Aura SaaS</span>
-                </div>
                 <div className="register-hero-copy">
                     <h1>Design with zero constraints</h1>
                     <p>Deploy your code, trace production events instantly, and work cohesively with fellow engineers under one beautiful interface.</p>
                 </div>
-                <p className="register-copyright">© 2024 Aura Inc. All rights reserved.</p>
+                <p className="register-copyright">© 2026 Study Tracker Inc. All rights reserved.</p>
             </section>
 
             <section className="register-panel" aria-label="Create your account">
 
                 <div className="register-panel-content">
-                    <div className="register-mobile-brand register-brand">
-                        <span className="register-brand-mark"><img src={brandHexagon} alt="" /></span>
-                        <span>Aura SaaS</span>
-                    </div>
-
                     <div className="register-heading">
                         <div className="register-heading-desktop">
                             <h1>Create your account</h1>
@@ -167,7 +156,7 @@ export default function Register() {
                                         aria-invalid={Boolean(errors.password)}
                                     />
                                     <button className="register-password-toggle" type="button" aria-label={showPassword ? 'Hide password' : 'Show password'} onClick={() => setShowPassword((visible) => !visible)}>
-                                        <img src={eyeIcon} alt="" />
+                                        {showPassword ? <img src={eyeCloseIcon} alt="" /> : <img src={eyeIcon} alt="" />}
                                     </button>
                                 </div>
                                 {errors.password && <p className="register-field-error">{errors.password}</p>}
@@ -191,7 +180,7 @@ export default function Register() {
                                         aria-invalid={Boolean(errors.confirmPassword)}
                                     />
                                     <button className="register-password-toggle" type="button" aria-label={showConfirmPassword ? 'Hide confirm password' : 'Show confirm password'} onClick={() => setShowConfirmPassword((visible) => !visible)}>
-                                        <img src={eyeIcon} alt="" />
+                                        {showConfirmPassword ? <img src={eyeCloseIcon} alt="" /> : <img src={eyeIcon} alt="" />}
                                     </button>
                                 </div>
                                 {errors.confirmPassword && <p className="register-field-error">{errors.confirmPassword}</p>}
@@ -213,11 +202,6 @@ export default function Register() {
                         </div>
 
                         <div className="register-social">
-                            <div className="register-divider" aria-label="or continue with">
-                                <img src={divider} alt="" />
-                                <span>or continue with</span>
-                                <img src={divider} alt="" />
-                            </div>
                             <div className="register-social-buttons">
                                 <button className="register-social-button" type="button" onClick={() => setNotice('Google sign-in is not available yet.')}>
                                     <img src={googleIcon} alt="" /><span>Google</span>
