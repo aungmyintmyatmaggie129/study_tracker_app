@@ -51,6 +51,11 @@ export function AuthContextProvider({ children }) {
         dispatch({ type: 'authenticated', user: response.data.user })
     }, [])
 
+    const logout = useCallback(async () => {
+        await axios.post(`${usersUrl}/logout`, {}, { withCredentials: true })
+        dispatch({ type: 'unauthenticated' })
+    }, [])
+
     const authenticate = useCallback((user) => {
         dispatch({ type: 'authenticated', user })
     }, [])
@@ -59,9 +64,10 @@ export function AuthContextProvider({ children }) {
         ...state,
         isAuthenticated: state.status === 'authenticated',
         login,
+        logout,
         authenticate,
         checkSession,
-    }), [state, login, authenticate, checkSession])
+    }), [state, login, logout, authenticate, checkSession])
 
     return <authContext.Provider value={value}>{children}</authContext.Provider>
 }

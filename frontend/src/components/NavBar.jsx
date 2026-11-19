@@ -1,7 +1,24 @@
-import { NavLink } from 'react-router-dom'
+import { useState } from 'react'
+import { NavLink, useNavigate } from 'react-router-dom'
 import { NavLinks } from '../const/index.js'
+import { useAuthContext } from '../contexts/useAuthContext.js'
 
 export default function NavBar() {
+    const [isAccountMenuOpen, setIsAccountMenuOpen] = useState(false)
+    const [logoutError, setLogoutError] = useState('')
+    const { logout } = useAuthContext()
+    const navigate = useNavigate()
+
+    const handleLogout = async () => {
+        setLogoutError('')
+        try {
+            await logout()
+            navigate('/', { replace: true })
+        } catch (error) {
+            setLogoutError(error.response?.data?.message || 'Unable to log out. Please try again.')
+        }
+    }
+
     return (
         <nav className="flex flex-wrap items-center justify-between gap-5" aria-label="Main navigation">
             <NavLink to="/home" className="flex items-center gap-2.5">
@@ -29,7 +46,29 @@ export default function NavBar() {
                     <i className="fa-solid fa-magnifying-glass"></i>
                     <input className="w-32 bg-transparent text-xs outline-none placeholder:text-muted" placeholder="Search notes..." aria-label="Search notes" />
                 </label>
-                <button type="button" aria-label="Open profile" className="grid h-10 w-10 place-items-center rounded-full border-2 border-navy bg-white text-xs font-extrabold">AM</button>
+                <div className="relative">
+                    <button
+                        type="button"
+                        aria-label="Open account menu"
+                        aria-expanded={isAccountMenuOpen}
+                        aria-controls="account-menu"
+                        onClick={() => {
+                            setIsAccountMenuOpen((isOpen) => !isOpen)
+                            setLogoutError('')
+                        }}
+                        className="grid h-10 w-10 place-items-center rounded-full border-2 border-navy bg-white text-xs font-extrabold"
+                    >
+                        AM
+                    </button>
+                    {isAccountMenuOpen && (
+                        <div id="account-menu" className="absolute right-0 z-10 mt-2 w-44 rounded-xl border border-navy/10 bg-white p-2 shadow-lg">
+                            <button type="button" className="w-full rounded-lg px-3 py-2 text-left text-sm hover:bg-lilac">Profile</button>
+                            <button type="button" className="w-full rounded-lg px-3 py-2 text-left text-sm hover:bg-lilac">Settings</button>
+                            <button type="button" onClick={handleLogout} className="w-full rounded-lg px-3 py-2 text-left text-sm font-semibold text-red-600 hover:bg-lilac">Log out</button>
+                            {logoutError && <p className="px-3 py-2 text-xs text-red-600" role="alert">{logoutError}</p>}
+                        </div>
+                    )}
+                </div>
             </div>
         </nav>
     )
