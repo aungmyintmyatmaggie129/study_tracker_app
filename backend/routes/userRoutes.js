@@ -8,6 +8,7 @@ const requireAuth = require("../middleware/requireAuth");
 
 router.get("/", userController.get)
 router.get("/me", requireAuth, userController.me)
+router.post("/logout", userController.logout)
 //Check the validation
 router.post("/register", [
     body('name').trim().isLength({ min: 2 }).withMessage('Name must be at least 2 characters.'),

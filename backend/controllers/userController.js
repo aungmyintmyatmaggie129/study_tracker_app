@@ -18,6 +18,14 @@ const userController = {
         delete user.password;
         return res.status(200).json({ user });
     },
+    logout: (req, res) => {
+        res.clearCookie('jwt', {
+            httpOnly: true,
+            sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
+            secure: process.env.NODE_ENV === 'production',
+        });
+        return res.status(200).json({ message: 'Logged out successfully.' });
+    },
     login: async (req, res) => {
         try {
             const { email, password } = req.body;
